@@ -1,0 +1,57 @@
+.loading-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(7, 10, 18, 0.88);
+  backdrop-filter: blur(6px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  animation: overlayFadeIn 0.2s ease;
+}
+
+.loading-overlay-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 18px;
+  padding: 36px 48px;
+  background: var(--bg-surface, #0c1019);
+  border: 1px solid var(--border-default, #1c2536);
+  border-radius: var(--r-xl, 12px);
+  box-shadow: var(--shadow-lg, 0 10px 30px rgba(0,0,0,.35));
+  min-width: 260px;
+}
+
+.loading-spinner-large {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.loading-spinner-large .spinner {
+  width: 44px;
+  height: 44px;
+  border: 3px solid var(--border-default, #1c2536);
+  border-top-color: var(--accent, #3b82f6);
+  border-radius: 50%;
+  animation: spin 0.9s linear infinite;
+}
+
+.loading-overlay-message {
+  color: var(--text-primary, #f1f5f9);
+  font-size: 13px;
+  font-weight: 600;
+  margin: 0;
+  text-align: center;
+  letter-spacing: 0.1px;
+}
+
+@keyframes overlayFadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
