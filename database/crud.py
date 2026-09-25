@@ -213,7 +213,7 @@ def list_findings(
 
     if service:
         stmt = stmt.where(
-            Finding.service == service
+            Finding.service == service.lower()
         )
 
     if status:

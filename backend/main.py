@@ -6,9 +6,14 @@ PROJECT_ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(PROJECT_ROOT))
 sys.path.insert(0, str(PROJECT_ROOT / "scanner"))
 
-from fastapi import FastAPI 
+from fastapi import FastAPI, Depends, Query, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
+from sqlalchemy.orm import Session
+from typing import Optional
+import uuid
 
+from database.connection import get_db
+from database import crud, serializers
 from scanner.main import run_scan
 
 
@@ -36,3 +41,28 @@ def health():
 @app.post("/scan")
 def scan_aws():
     return run_scan()
+
+
+@app.get("/findings")
+def get_findings(
+    severity: Optional[str] = None,
+    service: Optional[str] = None,
+    status: Optional[str] = None,
+    db: Session = Depends(get_db)
+):
+    findings = crud.list_findings(
+        db=db,
+        severity=severity,
+        service=service,
+        status=status,
+        limit=500
+    )
+    return [serializers.finding_to_dict(f, include_resource=False) for f in findings]
+
+
+@app.get("/findings/{finding_id}")
+def get_finding(finding_id: uuid.UUID, db: Session = Depends(get_db)):
+    finding = crud.get_finding_with_resource(db, finding_id)
+    if not finding:
+        raise HTTPException(status_code=404, detail="Finding not found")
+    return serializers.finding_to_dict(finding, include_resource=True)
