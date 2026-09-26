@@ -5,6 +5,7 @@ import Dashboard from "./pages/Dashboard";
 import Findings from "./pages/Findings";
 import FindingDetail from "./pages/FindingDetail";
 import Resources from "./pages/Resources";
+import Reports from "./pages/Reports";
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
         <Route path="/findings" element={<Findings />} />
         <Route path="/findings/:id" element={<FindingDetail />} />
         <Route path="/resources" element={<Resources />} />
+        <Route path="/reports" element={<Reports />} />
       </Routes>
     </div>
   );
