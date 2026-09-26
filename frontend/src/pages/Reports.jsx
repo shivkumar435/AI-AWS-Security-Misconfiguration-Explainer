@@ -7,27 +7,27 @@ function Reports() {
   const [loading, setLoading] = useState(true);
   
   useEffect(() => {
+    const fetchScans = async () => {
+      setLoading(true);
+      try {
+        // This endpoint is not yet implemented on the backend, 
+        // but we structure it to consume it when ready.
+        const response = await fetch(`http://127.0.0.1:8000/scans`);
+        if (!response.ok) throw new Error("Failed to fetch scans");
+        
+        const data = await response.json();
+        setScans(data);
+      } catch (error) {
+        console.error(error);
+        // Fallback/clear data on error since backend isn't ready
+        setScans([]);
+      } finally {
+        setLoading(false);
+      }
+    };
+
     fetchScans();
   }, []);
-
-  const fetchScans = async () => {
-    setLoading(true);
-    try {
-      // This endpoint is not yet implemented on the backend, 
-      // but we structure it to consume it when ready.
-      const response = await fetch(`http://127.0.0.1:8000/scans`);
-      if (!response.ok) throw new Error("Failed to fetch scans");
-      
-      const data = await response.json();
-      setScans(data);
-    } catch (error) {
-      console.error(error);
-      // Fallback/clear data on error since backend isn't ready
-      setScans([]);
-    } finally {
-      setLoading(false);
-    }
-  };
 
   const formatDate = (dateString) => {
     return new Date(dateString).toLocaleString();

@@ -10,31 +10,31 @@ function Resources() {
   const [filterRegion, setFilterRegion] = useState("");
 
   useEffect(() => {
+    const fetchResources = async () => {
+      setLoading(true);
+      try {
+        const params = new URLSearchParams();
+        if (filterService) params.append("service", filterService);
+        if (filterRegion) params.append("region", filterRegion);
+
+        // This endpoint is not yet implemented on the backend, 
+        // but we structure it to consume it when ready.
+        const response = await fetch(`http://127.0.0.1:8000/resources?${params.toString()}`);
+        if (!response.ok) throw new Error("Failed to fetch resources");
+        
+        const data = await response.json();
+        setResources(data);
+      } catch (error) {
+        console.error(error);
+        // Fallback/clear data on error since backend isn't ready
+        setResources([]);
+      } finally {
+        setLoading(false);
+      }
+    };
+
     fetchResources();
   }, [filterService, filterRegion]);
-
-  const fetchResources = async () => {
-    setLoading(true);
-    try {
-      const params = new URLSearchParams();
-      if (filterService) params.append("service", filterService);
-      if (filterRegion) params.append("region", filterRegion);
-
-      // This endpoint is not yet implemented on the backend, 
-      // but we structure it to consume it when ready.
-      const response = await fetch(`http://127.0.0.1:8000/resources?${params.toString()}`);
-      if (!response.ok) throw new Error("Failed to fetch resources");
-      
-      const data = await response.json();
-      setResources(data);
-    } catch (error) {
-      console.error(error);
-      // Fallback/clear data on error since backend isn't ready
-      setResources([]);
-    } finally {
-      setLoading(false);
-    }
-  };
 
   return (
     <div className="main">

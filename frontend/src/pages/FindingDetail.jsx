@@ -9,23 +9,23 @@ function FindingDetail() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    const fetchFinding = async () => {
+      setLoading(true);
+      try {
+        const response = await fetch(`http://127.0.0.1:8000/findings/${id}`);
+        if (!response.ok) throw new Error("Failed to fetch finding");
+        
+        const data = await response.json();
+        setFinding(data);
+      } catch (error) {
+        console.error(error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
     fetchFinding();
   }, [id]);
-
-  const fetchFinding = async () => {
-    setLoading(true);
-    try {
-      const response = await fetch(`http://127.0.0.1:8000/findings/${id}`);
-      if (!response.ok) throw new Error("Failed to fetch finding");
-      
-      const data = await response.json();
-      setFinding(data);
-    } catch (error) {
-      console.error(error);
-    } finally {
-      setLoading(false);
-    }
-  };
 
   if (loading) return <div className="main"><LoadingSpinner message="Loading finding details..." /></div>;
   if (!finding) return <div className="main"><EmptyState message="Finding not found." /></div>;
