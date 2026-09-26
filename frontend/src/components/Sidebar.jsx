@@ -23,7 +23,9 @@ function Sidebar() {
         <Link to="/resources" style={{ textDecoration: 'none' }}>
           <div className={`nav-item ${location.pathname.startsWith('/resources') ? 'active' : ''}`}>▣ Resources</div>
         </Link>
-        <div className="nav-item">✦ AI Security Agent</div>
+        <Link to="/agent" style={{ textDecoration: 'none' }}>
+          <div className={`nav-item ${location.pathname.startsWith('/agent') ? 'active' : ''}`}>✦ AI Security Agent</div>
+        </Link>
         <Link to="/reports" style={{ textDecoration: 'none' }}>
           <div className={`nav-item ${location.pathname.startsWith('/reports') ? 'active' : ''}`}>▤ Reports</div>
         </Link>
