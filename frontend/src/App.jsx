@@ -4,6 +4,7 @@ import Sidebar from "./components/Sidebar";
 import { Dashboard } from "./pages/Dashboard";
 import Findings from "./pages/Findings";
 import FindingDetail from "./pages/FindingDetail";
+import Resources from "./pages/Resources";
 
 function App() {
   return (
@@ -13,6 +14,7 @@ function App() {
         <Route path="/" element={<Dashboard />} />
         <Route path="/findings" element={<Findings />} />
         <Route path="/findings/:id" element={<FindingDetail />} />
+        <Route path="/resources" element={<Resources />} />
       </Routes>
     </div>
   );
