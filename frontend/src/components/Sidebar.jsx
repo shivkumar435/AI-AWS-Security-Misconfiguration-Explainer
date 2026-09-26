@@ -36,7 +36,10 @@ function Sidebar() {
           <span className="dot"></span>
           AWS Connected
         </div>
-        <small>Scanner v1.0</small>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+          <small>Scanner v1.0</small>
+          <Link to="/login" style={{ color: '#609eff', fontSize: '11px', textDecoration: 'none' }}>Login</Link>
+        </div>
       </div>
     </aside>
   );
