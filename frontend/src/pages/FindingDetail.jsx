@@ -1,5 +1,7 @@
 import { useState, useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
+import LoadingSpinner from "../components/common/LoadingSpinner";
+import EmptyState from "../components/common/EmptyState";
 
 function FindingDetail() {
   const { id } = useParams();
@@ -25,8 +27,8 @@ function FindingDetail() {
     }
   };
 
-  if (loading) return <div className="main"><p>Loading...</p></div>;
-  if (!finding) return <div className="main"><p>Finding not found.</p></div>;
+  if (loading) return <div className="main"><LoadingSpinner message="Loading finding details..." /></div>;
+  if (!finding) return <div className="main"><EmptyState message="Finding not found." /></div>;
 
   return (
     <div className="main">
