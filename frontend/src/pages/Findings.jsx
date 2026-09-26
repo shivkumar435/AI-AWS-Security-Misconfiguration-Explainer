@@ -12,28 +12,28 @@ function Findings() {
   const [filterStatus, setFilterStatus] = useState("");
 
   useEffect(() => {
+    const fetchFindings = async () => {
+      setLoading(true);
+      try {
+        const params = new URLSearchParams();
+        if (filterService) params.append("service", filterService);
+        if (filterSeverity) params.append("severity", filterSeverity);
+        if (filterStatus) params.append("status", filterStatus);
+
+        const response = await fetch(`http://127.0.0.1:8000/findings?${params.toString()}`);
+        if (!response.ok) throw new Error("Failed to fetch findings");
+        
+        const data = await response.json();
+        setFindings(data);
+      } catch (error) {
+        console.error(error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
     fetchFindings();
   }, [filterService, filterSeverity, filterStatus]);
-
-  const fetchFindings = async () => {
-    setLoading(true);
-    try {
-      const params = new URLSearchParams();
-      if (filterService) params.append("service", filterService);
-      if (filterSeverity) params.append("severity", filterSeverity);
-      if (filterStatus) params.append("status", filterStatus);
-
-      const response = await fetch(`http://127.0.0.1:8000/findings?${params.toString()}`);
-      if (!response.ok) throw new Error("Failed to fetch findings");
-      
-      const data = await response.json();
-      setFindings(data);
-    } catch (error) {
-      console.error(error);
-    } finally {
-      setLoading(false);
-    }
-  };
 
   return (
     <div className="main">
