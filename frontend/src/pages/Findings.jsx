@@ -1,5 +1,7 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import LoadingSpinner from "../components/common/LoadingSpinner";
+import EmptyState from "../components/common/EmptyState";
 
 function Findings() {
   const [findings, setFindings] = useState([]);
@@ -85,7 +87,7 @@ function Findings() {
           </div>
 
           <div className="findings">
-            {loading ? <p style={{ color: '#8a96a9' }}>Loading findings...</p> : findings.map((finding) => (
+            {loading ? <LoadingSpinner message="Loading findings..." /> : findings.map((finding) => (
               <Link to={`/findings/${finding.id}`} key={finding.id} style={{ textDecoration: 'none', color: 'inherit' }}>
                 <div className="finding" style={{ cursor: 'pointer' }}>
                   <div className={`finding-icon ${finding.status.toLowerCase()}`}>
@@ -107,7 +109,12 @@ function Findings() {
                 </div>
               </Link>
             ))}
-            {!loading && findings.length === 0 && <p style={{ color: '#8a96a9' }}>No findings match your criteria.</p>}
+            {!loading && findings.length === 0 && (
+              <EmptyState 
+                message="No findings match your criteria." 
+                subMessage="Try adjusting your filters to see more results." 
+              />
+            )}
           </div>
         </div>
       </section>
