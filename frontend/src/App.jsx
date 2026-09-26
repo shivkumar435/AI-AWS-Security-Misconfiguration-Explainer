@@ -7,6 +7,7 @@ import FindingDetail from "./pages/FindingDetail";
 import Resources from "./pages/Resources";
 import Reports from "./pages/Reports";
 import Agent from "./pages/Agent";
+import Login from "./pages/Login";
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
         <Route path="/resources" element={<Resources />} />
         <Route path="/reports" element={<Reports />} />
         <Route path="/agent" element={<Agent />} />
+        <Route path="/login" element={<Login />} />
       </Routes>
     </div>
   );
