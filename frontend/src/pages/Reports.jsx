@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import LoadingSpinner from "../components/common/LoadingSpinner";
-import EmptyState from "../components/common/EmptyState";
+import { EmptyState } from "../components/common/EmptyState";
 
 function Reports() {
   const [scans, setScans] = useState([]);

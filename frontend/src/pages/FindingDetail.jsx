@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
 import LoadingSpinner from "../components/common/LoadingSpinner";
-import EmptyState from "../components/common/EmptyState";
+import { EmptyState } from "../components/common/EmptyState";
 
 function FindingDetail() {
   const { id } = useParams();
