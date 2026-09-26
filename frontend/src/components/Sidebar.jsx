@@ -20,7 +20,9 @@ function Sidebar() {
         <Link to="/findings" style={{ textDecoration: 'none' }}>
           <div className={`nav-item ${location.pathname.startsWith('/findings') ? 'active' : ''}`}>⚠ Findings</div>
         </Link>
-        <div className="nav-item">▣ Resources</div>
+        <Link to="/resources" style={{ textDecoration: 'none' }}>
+          <div className={`nav-item ${location.pathname.startsWith('/resources') ? 'active' : ''}`}>▣ Resources</div>
+        </Link>
         <div className="nav-item">✦ AI Security Agent</div>
         <div className="nav-item">▤ Reports</div>
       </nav>
