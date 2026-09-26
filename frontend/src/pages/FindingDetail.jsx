@@ -8,11 +8,6 @@ function FindingDetail() {
   const [finding, setFinding] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  // AI Explanation States
-  const [aiExplanation, setAiExplanation] = useState(null);
-  const [aiLoading, setAiLoading] = useState(false);
-  const [aiError, setAiError] = useState(null);
-
   useEffect(() => {
     fetchFinding();
   }, [id]);
@@ -29,28 +24,6 @@ function FindingDetail() {
       console.error(error);
     } finally {
       setLoading(false);
-    }
-  };
-
-  const handleExplainWithAI = async () => {
-    setAiLoading(true);
-    setAiError(null);
-    try {
-      // Simulate API call delay for the UI testing
-      await new Promise(resolve => setTimeout(resolve, 1500));
-      
-      // TODO: Connect to real backend AI endpoint when available
-      // const response = await fetch(`http://127.0.0.1:8000/findings/${id}/explain`, { method: 'POST' });
-      // if (!response.ok) throw new Error("Failed to generate AI explanation");
-      // const data = await response.json();
-      // setAiExplanation(data.explanation);
-
-      setAiExplanation("This is a placeholder AI explanation. It will be replaced with real AI-generated analysis once the backend endpoint is implemented. The issue indicates a security misconfiguration that should be reviewed according to AWS best practices.");
-    } catch (error) {
-      console.error(error);
-      setAiError("Failed to generate AI explanation.");
-    } finally {
-      setAiLoading(false);
     }
   };
 
@@ -122,33 +95,49 @@ function FindingDetail() {
               <h2>AI Explanation</h2>
               <span>Deep security analysis</span>
             </div>
-            {!aiExplanation && !aiLoading && (
-              <button className="chat-button" onClick={handleExplainWithAI} style={{ marginLeft: 'auto', cursor: 'pointer' }}>
-                ✦ Explain with AI
-              </button>
-            )}
           </div>
 
           <div className="ai-message" style={{ minHeight: '100px', paddingTop: '20px' }}>
-            {aiLoading ? (
-              <LoadingSpinner message="Generating AI analysis..." />
-            ) : aiError ? (
-              <div style={{ color: '#ff707c', padding: '20px 0', textAlign: 'center' }}>
-                {aiError} <br/>
-                <button 
-                  onClick={handleExplainWithAI} 
-                  style={{ marginTop: '10px', background: 'transparent', border: '1px solid #ff707c', color: '#ff707c', padding: '5px 15px', borderRadius: '4px', cursor: 'pointer' }}
-                >
-                  Retry
-                </button>
+            {finding.ai_explanation ? (
+              <div style={{ color: '#e8edf7', fontSize: '14px', lineHeight: '1.6' }}>
+                <div style={{ marginBottom: '15px' }}>
+                  <span className="label" style={{ display: 'block', marginBottom: '4px' }}>WHAT IS WRONG</span>
+                  <p style={{ margin: 0 }}>{finding.ai_explanation.what_is_wrong}</p>
+                </div>
+                <div style={{ marginBottom: '15px' }}>
+                  <span className="label" style={{ display: 'block', marginBottom: '4px' }}>WHY IT MATTERS</span>
+                  <p style={{ margin: 0 }}>{finding.ai_explanation.why_it_matters}</p>
+                </div>
+                <div style={{ marginBottom: '15px' }}>
+                  <span className="label" style={{ display: 'block', marginBottom: '4px' }}>SECURITY IMPACT</span>
+                  <p style={{ margin: 0 }}>{finding.ai_explanation.security_impact}</p>
+                </div>
+                <div style={{ marginBottom: '15px' }}>
+                  <span className="label" style={{ display: 'block', marginBottom: '4px' }}>BLAST RADIUS</span>
+                  <p style={{ margin: 0 }}>{finding.ai_explanation.blast_radius}</p>
+                </div>
+                <div style={{ marginBottom: '20px' }}>
+                  <span className="label" style={{ display: 'block', marginBottom: '4px' }}>REMEDIATION STEPS</span>
+                  <ul style={{ margin: 0, paddingLeft: '20px' }}>
+                    {finding.ai_explanation.remediation_steps && finding.ai_explanation.remediation_steps.map((step, index) => (
+                      <li key={index}>{step}</li>
+                    ))}
+                  </ul>
+                </div>
+                <div style={{ display: 'flex', gap: '30px', marginTop: '20px', borderTop: '1px solid #1c2738', paddingTop: '15px' }}>
+                  <div>
+                    <span className="label">PRIORITY</span>
+                    <strong style={{ display: 'block', marginTop: '4px' }}>{finding.ai_explanation.priority}</strong>
+                  </div>
+                  <div>
+                    <span className="label">CONFIDENCE</span>
+                    <strong style={{ display: 'block', marginTop: '4px', textTransform: 'capitalize' }}>{finding.ai_explanation.confidence}</strong>
+                  </div>
+                </div>
               </div>
-            ) : aiExplanation ? (
-              <p style={{ color: '#e8edf7', fontSize: '14px', lineHeight: '1.6', margin: 0 }}>
-                {aiExplanation}
-              </p>
             ) : (
               <div style={{ padding: '20px 0', textAlign: 'center', color: '#68778d' }}>
-                Click the button above to generate a detailed AI analysis of this finding.
+                AI explanation not available yet.
               </div>
             )}
           </div>
