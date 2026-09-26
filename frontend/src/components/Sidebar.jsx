@@ -24,7 +24,9 @@ function Sidebar() {
           <div className={`nav-item ${location.pathname.startsWith('/resources') ? 'active' : ''}`}>▣ Resources</div>
         </Link>
         <div className="nav-item">✦ AI Security Agent</div>
-        <div className="nav-item">▤ Reports</div>
+        <Link to="/reports" style={{ textDecoration: 'none' }}>
+          <div className={`nav-item ${location.pathname.startsWith('/reports') ? 'active' : ''}`}>▤ Reports</div>
+        </Link>
       </nav>
 
       <div className="sidebar-bottom">
